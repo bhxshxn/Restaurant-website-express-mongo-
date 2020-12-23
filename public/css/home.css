@@ -1,0 +1,19 @@
+body{
+    background:url(/images/bgmain.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    color: white;
+}
+.bg-image{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    top: 200px;
+    left: 280px;
+    background-color: #ffe5b9;
+    color: black;
+    width: 700px;
+}
+
+
