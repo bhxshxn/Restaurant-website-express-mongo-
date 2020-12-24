@@ -9,6 +9,7 @@ const bcrypt = require('bcrypt');
 const cookieSession = require("cookie-session");
 const authenticateUser = require("./middlewares/authenticateUser");
 const menu = require('./models/menu');
+const order = require('./models/order');
 
 //session
 app.use(
@@ -72,7 +73,7 @@ app.get('/helpme', (req, res) => {
 
 // register route
 app.get('/register', (req, res) => {
-    res.render('main/register');
+    res.render('main/register', { user: req.session.user });
 });
 
 //post for register
@@ -148,8 +149,9 @@ app.get("/logout", authenticateUser, (req, res) => {
 });
 
 //output
-app.get('/order', (req, res) => {
-    res.render('main/order', { user: req.session.user });
+app.get('/order', async (req, res) => {
+    const Order = await order.find({})
+    res.render('main/order', { user: req.session.user, orders: Order });
 });
 
 

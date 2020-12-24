@@ -18,6 +18,35 @@
     <!-- navbar -->
     <%- include("./../partials/navbar.ejs") %>
         <!-- Navbar End -->
+        <div class="container mt-5">
+            <table class="table">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Quantity</th>
+                        <th scope="col">Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <%orders.forEach(order=>{%>
+                        <%if(user.username==order.user){%>
+                            <tr>
+                                <th scope="row">1</th>
+                                <td>
+                                    <%=order.name%>
+                                </td>
+                                <td>
+                                    <%=order.quantity%>
+                                </td>
+                                <td>Rs.<%=order.price%>
+                                </td>
+                            </tr>
+                            <%}%>
+                                <%})%>
+                </tbody>
+            </table>
+        </div>
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
             integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
             crossorigin="anonymous"></script>
