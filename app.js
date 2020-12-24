@@ -8,6 +8,7 @@ const User = require('./models/user.js');
 const bcrypt = require('bcrypt');
 const cookieSession = require("cookie-session");
 const authenticateUser = require("./middlewares/authenticateUser");
+const menu = require('./models/menu');
 
 //session
 app.use(
@@ -53,18 +54,20 @@ app.get('/home', (req, res) => {
 });
 
 // menu route
-app.get('/menu', (req, res) => {
-    res.render('main/menu');
+app.get('/menu', async (req, res) => {
+    const Menu = await menu.find({})
+    // console.log(Menu);
+    res.render('main/menu', { m: Menu, user: req.session.user });
 });
 
 // login route
 app.get('/login', (req, res) => {
-    res.render('main/login');
+    res.render('main/login', { user: req.session.user });
 });
 
 // helpme route
 app.get('/helpme', (req, res) => {
-    res.render('main/helpme');
+    res.render('main/helpme', { user: req.session.user });
 });
 
 // register route
@@ -143,6 +146,12 @@ app.get("/logout", authenticateUser, (req, res) => {
     req.session.user = null;
     res.redirect("/");
 });
+
+//output
+app.get('/order', (req, res) => {
+    res.render('main/order', { user: req.session.user });
+});
+
 
 
 // Server

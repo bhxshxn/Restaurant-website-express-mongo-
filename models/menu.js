@@ -1,11 +1,11 @@
 const mongoose = require("mongoose");
 
-const UserSchema = new mongoose.Schema({
+const menuSchema = new mongoose.Schema({
     title: {
         type: String,
         required: true,
     },
-    desc: {
+    Desc: {
         type: String,
         required: true,
     },
@@ -13,10 +13,10 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    image: {
+    imagePath: {
         type: String,
         required: true,
     },
 });
 
-module.exports = new mongoose.model("User", UserSchema);
+module.exports = new mongoose.model("Menu", menuSchema);
