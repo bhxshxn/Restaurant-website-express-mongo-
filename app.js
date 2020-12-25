@@ -41,39 +41,39 @@ db.once('open', function () {
 
 // index route
 app.get('/', (req, res) => {
-    res.render('main/home', { user: req.session.user });
+    res.render('main/home', { user: req.session.user, page: "home" });
 });
 
 //post route home
 app.get("/home", (req, res) => {
-    res.render("main/home", { user: req.session.user });
+    res.render("main/home", { user: req.session.user, page: "home" });
 });
 
 // home route
 app.get('/home', (req, res) => {
-    res.render('main/home', { user: req.session.user });
+    res.render('main/home', { user: req.session.user, page: "home" });
 });
 
 // menu route
 app.get('/menu', async (req, res) => {
     const Menu = await menu.find({})
     // console.log(Menu);
-    res.render('main/menu', { m: Menu, user: req.session.user });
+    res.render('main/menu', { m: Menu, user: req.session.user, page: "menu" });
 });
 
 // login route
 app.get('/login', (req, res) => {
-    res.render('main/login', { user: req.session.user });
+    res.render('main/login', { user: req.session.user, page: "login" });
 });
 
 // helpme route
 app.get('/helpme', (req, res) => {
-    res.render('main/helpme', { user: req.session.user });
+    res.render('main/helpme', { user: req.session.user, page: "helpme" });
 });
 
 // register route
 app.get('/register', (req, res) => {
-    res.render('main/register', { user: req.session.user });
+    res.render('main/register', { user: req.session.user, page: "login" });
 });
 
 //post for register
@@ -151,7 +151,25 @@ app.get("/logout", authenticateUser, (req, res) => {
 //output
 app.get('/order', async (req, res) => {
     const Order = await order.find({})
-    res.render('main/order', { user: req.session.user, orders: Order });
+    res.render('main/order', { user: req.session.user, orders: Order, page: null });
+});
+
+//order
+app.get('/order-com/:id', async (req, res, next) => {
+    var id = req.params.id;
+    if (req.session.user) {
+        // const product = {
+        //     name: menu[id].title,
+        //     quantity: 1,
+        //     price: menu[id].price,
+        //     user: req.session.user
+        // };
+        const result = await User.find({ _id: "5fe3416b8025362f44d4ec8a" });
+        console.log(result);
+        res.redirect('/menu');
+    } else {
+        res.send("Please Login First to Order");
+    }
 });
 
 
