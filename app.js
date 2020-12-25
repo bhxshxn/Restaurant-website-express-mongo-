@@ -10,6 +10,7 @@ const cookieSession = require("cookie-session");
 const authenticateUser = require("./middlewares/authenticateUser");
 const menu = require('./models/menu');
 const order = require('./models/order');
+const helpme = require('./models/helpme.js');
 
 //session
 app.use(
@@ -69,6 +70,25 @@ app.get('/login', (req, res) => {
 // helpme route
 app.get('/helpme', (req, res) => {
     res.render('main/helpme', { user: req.session.user, page: "helpme" });
+});
+
+//helpme post
+app.post('/helpme', async (req, res) => {
+    const { fname, lname, phoneno, country, feedback } = req.body;
+    if (req.session.user) {
+        const user = req.session.user.username;
+    };
+    const latestFeedback = new helpme({ fname, lname, phoneno, country, feedback });
+    latestFeedback
+        .save()
+        .then(() => {
+            res.redirect('/home');
+            res.send('<script>alert("Thank you we will look after the issues.")</script>');
+
+            return;
+        })
+        .catch((err) => console.log(err));
+
 });
 
 // register route
@@ -158,14 +178,24 @@ app.get('/order', async (req, res) => {
 app.get('/order-com/:id', async (req, res, next) => {
     var id = req.params.id;
     if (req.session.user) {
-        // const product = {
-        //     name: menu[id].title,
-        //     quantity: 1,
-        //     price: menu[id].price,
-        //     user: req.session.user
-        // };
-        const result = await User.find({ _id: "5fe3416b8025362f44d4ec8a" });
-        console.log(result);
+        const result = await menu.find({ _id: id });
+        if (result[0].id === id) {
+            var new_order = new order({
+                name: result[0].title,
+                quantity: 1,
+                price: result[0].price,
+                user: req.session.user.username
+            })
+
+            new_order.save(function (err, result) {
+                if (err) {
+                    console.log(err);
+                }
+                else {
+                    console.log(result)
+                }
+            })
+        };
         res.redirect('/menu');
     } else {
         res.send("Please Login First to Order");
@@ -176,5 +206,5 @@ app.get('/order-com/:id', async (req, res, next) => {
 
 // Server
 app.listen(port, () => {
-    console.log(`Server is listening at port :${port}`)
+    console.log(`Server is listening at : http://localhost:${port}`);
 });
