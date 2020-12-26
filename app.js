@@ -64,12 +64,12 @@ app.get('/menu', async (req, res) => {
 
 // login route
 app.get('/login', (req, res) => {
-    res.render('main/login', { user: req.session.user, page: "login" });
+    res.render('main/login', { user: req.session.user, page: "login", msg: null });
 });
 
 // helpme route
 app.get('/helpme', (req, res) => {
-    res.render('main/helpme', { user: req.session.user, page: "helpme" });
+    res.render('main/helpme', { user: req.session.user, page: "helpme", msg: null });
 });
 
 //helpme post
@@ -82,8 +82,9 @@ app.post('/helpme', async (req, res) => {
     latestFeedback
         .save()
         .then(() => {
-            res.redirect('/home');
-            res.send('<script>alert("Thank you we will look after the issues.")</script>');
+            const message = "Thank you we will look after the issues.";
+            res.render('main/helpme', { user: req.session.user, page: "helpme", msg: message });
+
 
             return;
         })
@@ -93,7 +94,7 @@ app.post('/helpme', async (req, res) => {
 
 // register route
 app.get('/register', (req, res) => {
-    res.render('main/register', { user: req.session.user, page: "login" });
+    res.render('main/register', { user: req.session.user, page: "login", msg: null });
 });
 
 //post for register
@@ -102,14 +103,14 @@ app.post("/register", async (req, res) => {
 
     // check for missing filds
     if (!email || !password || !username || !add) {
-        res.send("Please enter all the fields");
+        res.render('main/register', { user: req.session.user, page: "login", msg: "Please enter all the fields" })
         return;
     }
 
     const doesUserExitsAlreay = await User.findOne({ email });
 
     if (doesUserExitsAlreay) {
-        res.send("A user with that email already exits please try another one!");
+        res.render('main/register', { user: req.session.user, page: "login", msg: "Email already exists" });
         return;
     }
 
@@ -120,7 +121,7 @@ app.post("/register", async (req, res) => {
     latestUser
         .save()
         .then(() => {
-            res.send("registered account!");
+            res.render('main/register', { user: req.session.user, page: "login", msg: "Registered Succesfully! Login." });
             return;
         })
         .catch((err) => console.log(err));
@@ -140,8 +141,7 @@ app
         const doesUserExits = await User.findOne({ username });
 
         if (!doesUserExits) {
-            res.send("invalid username or password");
-            return;
+            res.render('main/login', { user: req.session.user, page: "login", msg: "Invalid useranme or password" }); return;
         }
 
         const doesPasswordMatch = await bcrypt.compare(
@@ -150,7 +150,7 @@ app
         );
 
         if (!doesPasswordMatch) {
-            res.send("invalid useranme or password");
+            res.render('main/login', { user: req.session.user, page: "login", msg: "Invalid useranme or password" });
             return;
         }
 
@@ -171,7 +171,7 @@ app.get("/logout", authenticateUser, (req, res) => {
 //output
 app.get('/order', async (req, res) => {
     const Order = await order.find({})
-    res.render('main/order', { user: req.session.user, orders: Order, page: null });
+    res.render('main/order', { user: req.session.user, orders: Order, page: null, count: null });
 });
 
 //order
