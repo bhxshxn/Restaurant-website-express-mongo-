@@ -9,6 +9,11 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
         integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+
+    <!-- fontawesome -->
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+        integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+
     <!-- stylesheet0 -->
     <link rel="stylesheet" href="/css/style.css">
     <title>Prabhu Restaurant</title>
@@ -19,39 +24,60 @@
     <%- include("./../partials/navbar.ejs") %>
         <!-- Navbar End -->
         <div class="container mt-5">
-            <%orders.forEach(order=>{%>
-                <%if(user.username==orders.user){%>
-                    count ++;
-                    <%}%>
-                        <%})%>
-                            <table class="table">
-                                <thead class="thead-light">
-                                    <tr>
-                                        <th scope="col">#</th>
-                                        <th scope="col">Name</th>
-                                        <th scope="col">Quantity</th>
-                                        <th scope="col">Price</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <%orders.forEach(order=>{%>
-                                        <%if(user.username==order.user){%>
-                                            <tr>
-                                                <th scope="row">1</th>
-                                                <td>
-                                                    <%=order.name%>
-                                                </td>
-                                                <td>
-                                                    <%=order.quantity%>
-                                                </td>
-                                                <td>Rs.<%=order.price%>
-                                                </td>
-                                            </tr>
+            <%var count=0%>
+                <%orders.forEach(order=>{%>
+                    <%if(user.username==order.user){%>
+                        <%count+=1%>
+                            <%}%>
+                                <%})%>
+                                    <%if(count>0){%>
+                                        <%if(msg){%>
+                                            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                                <%=msg%>
+                                                    <button type="button" class="close" data-dismiss="alert"
+                                                        aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                            </div>
                                             <%}%>
-                                                <%})%>
-                                                    <%=console.log(count)%>
-                                </tbody>
-                            </table>
+                                                <table class="table">
+                                                    <thead class="thead-light">
+                                                        <tr>
+                                                            <th scope="col">#</th>
+                                                            <th scope="col">Name</th>
+                                                            <th scope="col">Quantity</th>
+                                                            <th scope="col">Price</th>
+                                                            <th scope="col">Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <%orders.forEach(order=>{%>
+                                                            <%if(user.username==order.user){%>
+                                                                <tr>
+                                                                    <th scope="row">1</th>
+                                                                    <td>
+                                                                        <%=order.name%>
+                                                                    </td>
+                                                                    <td>
+                                                                        <%=order.quantity%>
+                                                                    </td>
+                                                                    <td>Rs.<%=order.price%>
+                                                                    </td>
+                                                                    <td><a href="/delete/<%=order._id;%>"><i
+                                                                                class="fa fa-trash"></i></a></td>
+                                                                </tr>
+
+                                                                <%}%>
+                                                                    <%})%>
+                                                    </tbody>
+                                                </table>
+                                                <%}else{%>
+                                                    <div class="alert alert-primary" role="alert">
+                                                        You have no order please order something!!!.
+                                                    </div>
+                                                    <%}%>
+
+
         </div>
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
             integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"

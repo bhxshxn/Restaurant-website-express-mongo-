@@ -59,7 +59,7 @@ app.get('/home', (req, res) => {
 app.get('/menu', async (req, res) => {
     const Menu = await menu.find({})
     // console.log(Menu);
-    res.render('main/menu', { m: Menu, user: req.session.user, page: "menu" });
+    res.render('main/menu', { m: Menu, user: req.session.user, page: "menu", msg: null });
 });
 
 // login route
@@ -171,7 +171,7 @@ app.get("/logout", authenticateUser, (req, res) => {
 //output
 app.get('/order', async (req, res) => {
     const Order = await order.find({})
-    res.render('main/order', { user: req.session.user, orders: Order, page: null, count: null });
+    res.render('main/order', { user: req.session.user, orders: Order, page: null, msg: null });
 });
 
 //order
@@ -187,21 +187,29 @@ app.get('/order-com/:id', async (req, res, next) => {
                 user: req.session.user.username
             })
 
-            new_order.save(function (err, result) {
+            new_order.save(async function (err, result) {
                 if (err) {
                     console.log(err);
                 }
                 else {
-                    console.log(result)
+                    const Menu = await menu.find({})
+                    res.render('main/menu', { user: req.session.user, page: "menu", msg: "Order placed", m: Menu });
                 }
             })
         };
-        res.redirect('/menu');
     } else {
-        res.send("Please Login First to Order");
+        const Menu = await menu.find({})
+        res.render('main/menu', { user: req.session.user, page: "menu", msg: "Login to Order", m: Menu });
     }
 });
 
+//orders delete
+app.get('/delete/:id', async (req, res) => {
+    var id = req.params.id;
+    await order.findByIdAndDelete({ _id: id });
+    const Order = await order.find({})
+    res.render('main/order', { user: req.session.user, orders: Order, page: null, msg: "Order Deleted" });
+});
 
 
 // Server
