@@ -34,7 +34,7 @@
                     <%} else { %>
                         class="nav-item"
                         <% } %>>
-                            <a class="nav-link" href="/login">Login</a>
+                            <a class="nav-link" href="/user/login">Login</a>
                 </li>
                 <%} else { %>
                     <li class="nav-item dropdown">
@@ -43,8 +43,8 @@
                             <%=user.username%>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="/order">Orders</a>
-                            <a class="dropdown-item" href="/logout">Logout</a>
+                            <a class="dropdown-item" href="/user/order">Orders</a>
+                            <a class="dropdown-item" href="/user/logout">Logout</a>
 
                         </div>
                     </li>

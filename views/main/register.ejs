@@ -20,7 +20,7 @@
     <%- include("./../partials/navbar.ejs") %>
         <!-- Navbar End -->
         <div class="center-text">
-            <form class="form-signin" method="POST" action="/register">
+            <form class="form-signin" method="POST" action="/user/register">
                 <h2 class="form-signin-heading">Please Sign up</h2>
                 <%if(msg){%>
                     <div class="alert alert-warning alert-dismissible fade show" role="alert">
@@ -44,7 +44,7 @@
                             required style="margin-bottom: 10px;">
                         <button class="btn btn-lg btn-primary btn-block mb-4" type="submit">Sign up</button>
             </form>
-            <ul class="register" style="margin-left: 15px;">Back to<a href="/login" class="signup"> Login.</a></ul>
+            <ul class="register" style="margin-left: 15px;">Back to<a href="/user/login" class="signup"> Login.</a></ul>
         </div>
 
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
