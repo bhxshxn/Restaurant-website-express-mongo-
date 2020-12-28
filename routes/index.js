@@ -5,6 +5,7 @@ const helpme = require('../models/helpme.js');
 
 // different routes
 router.use('/user', require('../routes/user'));
+router.use('/admin', require('../routes/admin'));
 
 // index route
 router.get('/', (req, res) => {

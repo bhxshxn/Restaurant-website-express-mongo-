@@ -36,12 +36,6 @@ db.once('open', function () {
     console.log('Database is connected successfully on port 27017!!!');
 });
 
-
-
-
-
-
-
 // Server
 app.listen(port, () => {
     console.log(`Server is listening at : http://localhost:${port}`);
