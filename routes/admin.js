@@ -43,7 +43,6 @@ router.post('/upload', upload.single('image'), (req, res) => {
             console.log(err);
         }
         else {
-            const Menu = await menu.find({})
             res.render('admin/uploaditem', { msg: "Item Uploaded", });
         }
     })
