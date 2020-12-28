@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const multer = require('multer');
 const menu = require('../models/menu');
+const order = require('../models/order');
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         cb(null, './public/images/')
@@ -46,6 +47,12 @@ router.post('/upload', upload.single('image'), (req, res) => {
             res.render('admin/uploaditem', { msg: "Item Uploaded", });
         }
     })
+});
+
+//orders route
+router.get('/order', async (req, res) => {
+    const result = await order.find({});
+    res.render('admin/order', { orders: result });
 });
 
 module.exports = router;
