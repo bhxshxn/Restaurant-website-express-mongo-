@@ -21,13 +21,6 @@
                     <% } %>>
                         <a class="nav-link" href="/menu">Menu</a>
             </li>
-            <li <% if (page==='helpme' ) { %>
-                class=" nav-item active"
-                <%} else { %>
-                    class="nav-item"
-                    <% } %>>
-                        <a class="nav-link " href="/helpme">Help Me</a>
-            </li>
             <% if (!user) { %>
                 <li <% if (page==='login' ) { %>
                     class=" nav-item active"
@@ -51,6 +44,13 @@
                         </div>
                     </li>
                     <% } %>
+                        <li <% if (page==='helpme' ) { %>
+                            class=" nav-item active"
+                            <%} else { %>
+                                class="nav-item"
+                                <% } %>>
+                                    <a class="nav-link " href="/helpme">Help Me</a>
+                        </li>
         </ul>
 
     </div>

@@ -19,12 +19,12 @@ router.get('/register', (req, res) => {
 //post for register
 router.post("/register", async (req, res) => {
     const { email, password, username, add } = req.body;
-
     // check for missing filds
     if (!email || !password || !username || !add) {
         res.render('main/register', { user: req.session.user, page: "login", msg: "Please enter all the fields" })
         return;
-    }
+    };
+    var user = username.charAt(0).toUpperCase() + username.slice(1);
 
     const doesUserExitsAlreay = await User.findOne({ email });
     if (doesUserExitsAlreay) {
@@ -32,7 +32,7 @@ router.post("/register", async (req, res) => {
         return;
     };
 
-    const doesUsernameExitsAlreay = await User.findOne({ username });
+    const doesUsernameExitsAlreay = await User.findOne({ username: user });
     if (doesUsernameExitsAlreay) {
         res.render('main/register', { user: req.session.user, page: "login", msg: "Username already exists" });
         return;
@@ -40,7 +40,7 @@ router.post("/register", async (req, res) => {
 
     // lets hash the password
     const hashedPassword = await bcrypt.hash(password, 12);
-    const latestUser = new User({ email, password: hashedPassword, username, add });
+    const latestUser = new User({ email, password: hashedPassword, username: user, add });
 
     latestUser
         .save()
@@ -54,14 +54,14 @@ router.post("/register", async (req, res) => {
 //post for login
 router
     .post("/login", async (req, res) => {
-        const { username, password } = req.body;
+        var { username, password } = req.body;
 
         // check for missing filds
         if (!username || !password) {
             res.send("Please enter all the fields");
             return;
         }
-
+        username = username.charAt(0).toUpperCase() + username.slice(1);
         const doesUserExits = await User.findOne({ username });
 
         if (!doesUserExits) {
