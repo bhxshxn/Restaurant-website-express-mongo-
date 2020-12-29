@@ -93,13 +93,13 @@ router.get("/logout", authenticateUser, (req, res) => {
 });
 
 //output
-router.get('/order', async (req, res) => {
+router.get('/order', authenticateUser, async (req, res) => {
     const Order = await order.find({})
     res.render('main/order', { user: req.session.user, orders: Order, page: null, msg: null });
 });
 
 //order
-router.get('/order-com/:id', async (req, res, next) => {
+router.get('/order-com/:id', authenticateUser, async (req, res, next) => {
     var id = req.params.id;
     if (req.session.user) {
         const result = await menu.find({ _id: id });
@@ -128,7 +128,7 @@ router.get('/order-com/:id', async (req, res, next) => {
 });
 
 //orders delete
-router.get('/delete/:id', async (req, res) => {
+router.get('/delete/:id', authenticateUser, async (req, res) => {
     var id = req.params.id;
     await order.findByIdAndDelete({ _id: id });
     const Order = await order.find({})
