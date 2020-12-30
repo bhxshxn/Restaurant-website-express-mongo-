@@ -17,6 +17,13 @@
     <!-- stylesheet0 -->
     <link rel="stylesheet" href="/css/style.css">
     <title>Prabhu Restaurant</title>
+    <style>
+        .alert {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+    </style>
 </head>
 
 <body>
@@ -25,63 +32,69 @@
         <!-- Navbar End -->
         <div class="container mt-5">
             <%var count=0%>
-                <%orders.forEach(order=>{%>
-                    <%if(user.username==order.user){%>
-                        <%count+=1%>
-                            <%}%>
-                                <%})%>
-                                    <%if(count>0){%>
-                                        <%if(msg){%>
-                                            <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                                                <%=msg%>
-                                                    <button type="button" class="close" data-dismiss="alert"
-                                                        aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                            </div>
-                                            <%}%>
-                                                <table class="table">
-                                                    <thead class="thead-light">
-                                                        <tr>
-                                                            <th scope="col">#</th>
-                                                            <th scope="col">Name</th>
-                                                            <th scope="col">Quantity</th>
-                                                            <th scope="col">Price</th>
-                                                            <th scope="col">Action</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <%orders.forEach(order=>{%>
-                                                            <%if(user.username==order.user){%>
+                <%var counts=0%>
+                    <%var total=0%>
+                        <%orders.forEach(order=>{%>
+                            <%if(user.username==order.user){%>
+                                <%total=total+parseInt(order.price);%>
+                                    <%count+=1%>
+                                        <%}%>
+                                            <%})%>
+                                                <%if(count>0){%>
+                                                    <div class="table-responsive">
+                                                        <table class="table">
+                                                            <thead class="thead-light">
                                                                 <tr>
-                                                                    <th scope="row">1</th>
-                                                                    <td>
-                                                                        <%=order.name%>
-                                                                    </td>
-                                                                    <td>
-                                                                        <%=order.quantity%>
-                                                                    </td>
-                                                                    <td>Rs.<%=order.price%>
-                                                                    </td>
-                                                                    <td><a href="/user/add/<%=order._id;%>"
-                                                                            style="margin-right: 10px;"><i
-                                                                                class="fa fa-plus"></i></a> <a
-                                                                            href="/user/minus/<%=order._id;%>"
-                                                                            style="margin-right: 10px;"><i
-                                                                                class="fas fa-minus"></i></a> <a
-                                                                            href="/user/delete/<%=order._id;%>"><i
-                                                                                class="fa fa-trash"></i></a></td>
+                                                                    <th scope="col">#</th>
+                                                                    <th scope="col">Name</th>
+                                                                    <th scope="col">Quantity</th>
+                                                                    <th scope="col">Price</th>
+                                                                    <th scope="col">Action</th>
                                                                 </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <%orders.forEach(order=>{%>
+                                                                    <%if(user.username==order.user){%>
+                                                                        <%counts++%>
+                                                                            <tr>
+                                                                                <th scope="row">
+                                                                                    <%=counts%>
+                                                                                </th>
+                                                                                <td>
+                                                                                    <%=order.name%>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <%=order.quantity%>
+                                                                                </td>
+                                                                                <td>&#8377; <%=order.price%>
+                                                                                </td>
+                                                                                <td><a href="/user/add/<%=order._id;%>"
+                                                                                        style="margin-right: 10px;"><i
+                                                                                            class="fa fa-plus"></i></a>
+                                                                                    <a href="/user/minus/<%=order._id;%>"
+                                                                                        style="margin-right: 10px;"><i
+                                                                                            class="fas fa-minus"></i></a>
+                                                                                    <a
+                                                                                        href="/user/delete/<%=order._id;%>"><i
+                                                                                            class="fa fa-trash"></i></a>
+                                                                                </td>
+                                                                            </tr>
 
-                                                                <%}%>
-                                                                    <%})%>
-                                                    </tbody>
-                                                </table>
-                                                <%}else{%>
-                                                    <div class="alert alert-primary" role="alert">
-                                                        You have no order please order something!!!.
+                                                                            <%}%>
+                                                                                <%})%>
+                                                            </tbody>
+                                                        </table>
+                                                        <div class="alert alert-success" role="alert">
+                                                            <span><strong> Total=&#8377; <%=total%>
+                                                                </strong></span>
+                                                            <a href="#" class="btn btn-success">Checkout</a>
+                                                        </div>
                                                     </div>
-                                                    <%}%>
+                                                    <%}else{%>
+                                                        <div class="alert alert-primary" role="alert">
+                                                            You have no order please order something!!!.
+                                                        </div>
+                                                        <%}%>
 
 
         </div>
