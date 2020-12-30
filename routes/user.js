@@ -117,7 +117,7 @@ router.get('/order-com/:id', authenticateUser, async (req, res, next) => {
                 }
                 else {
                     const Menu = await menu.find({})
-                    res.render('main/menu', { user: req.session.user, page: "menu", msg: "Order placed", m: Menu });
+                    res.render('main/menu', { user: req.session.user, page: "menu", msg: "Added to Cart", m: Menu });
                 }
             })
         };
@@ -131,8 +131,40 @@ router.get('/order-com/:id', authenticateUser, async (req, res, next) => {
 router.get('/delete/:id', authenticateUser, async (req, res) => {
     var id = req.params.id;
     await order.findByIdAndDelete({ _id: id });
-    const Order = await order.find({})
-    res.render('main/order', { user: req.session.user, orders: Order, page: null, msg: "Order Deleted" });
+    const Order = await order.find({});
+    res.render('main/order', { user: req.session.user, orders: Order, page: null, msg: "Item Removed" });
+});
+
+router.get('/cart', authenticateUser, async (req, res) => {
+    const Order = await order.find({});
+    res.render('main/cart', { user: req.session.user, orders: Order, page: null, msg: null });
+});
+
+router.get('/add/:id', authenticateUser, async (req, res) => {
+    var id = req.params.id;
+    const result = await order.findById({ _id: id });
+    const Menu = await menu.find({ title: result.name })
+    var quantitys = result.quantity;
+    quantitys++;
+    var prices = Menu[0].price * quantitys;
+    await order.replaceOne({ _id: id }, { name: Menu[0].title, user: req.session.user.username, quantity: quantitys, price: prices });
+    res.redirect('back');
+});
+
+router.get('/minus/:id', authenticateUser, async (req, res) => {
+    var id = req.params.id;
+    const result = await order.findById({ _id: id });
+    const Menu = await menu.find({ title: result.name })
+    var quantitys = result.quantity;
+    quantitys--;
+    if (quantitys === 0) {
+        await order.findByIdAndDelete({ _id: id });
+        res.redirect('back');
+    } else {
+        var prices = Menu[0].price * quantitys;
+        await order.replaceOne({ _id: id }, { name: Menu[0].title, user: req.session.user.username, quantity: quantitys, price: prices });
+        res.redirect('back');
+    };
 });
 
 

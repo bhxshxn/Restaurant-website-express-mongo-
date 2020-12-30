@@ -36,6 +36,7 @@
                             <%=user.username%>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="/user/cart">Cart</a>
                             <a class="dropdown-item" href="/user/order">Orders</a>
                             <%if(user.username==="Admin"){%>
                                 <a class="dropdown-item" href="/admin/">Admin Section</a>
