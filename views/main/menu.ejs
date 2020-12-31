@@ -13,7 +13,12 @@
     <link rel="stylesheet" href="/css/style.css">
     <!-- menu css -->
     <link rel="stylesheet" href="/css/menu.css">
-    <title>Prabhu Restaurant</title>
+    <title>Rean Restaurant</title>
+    <style>
+        .form-control {
+            display: inline;
+        }
+    </style>
 </head>
 
 <body>
@@ -21,14 +26,22 @@
     <%- include("./../partials/navbar.ejs") %>
         <!-- Navbar End -->
         <div class="container">
+
             <%if(msg){%>
-                <div class="alert alert-warning alert-dismissible fade show mt-5" role="alert">
+                <form action="/user/search" method="POST" class="mb-3 mt-5 ">
+                    <input type="text" class="form-control w-50 ml-10" aria-label="Sizing example input"
+                        aria-describedby="inputGroup-sizing-default" name="search">
+                    <input type="submit" value="Search" class="btn btn-success">
+                </form>
+                <div class="alert alert-danger alert-dismissible fade show mt-5 " role="alert">
                     <%=msg%>
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
                 </div>
-                <%}%>
+                <%}else{%>
+                    <form action="/user/search" method="POST" class="mb-3 mt-5 ">
+                        <input type="text" class="form-control w-50 ml-10" aria-label="Sizing example input"
+                            aria-describedby="inputGroup-sizing-default" name="search">
+                        <input type="submit" value="Search" class="btn btn-success">
+                    </form>
                     <div class="row">
                         <% for(var i=0; i < m.length; i++) { %>
                             <div class="card col-4 md-3 " style="width: 18rem;">
@@ -49,6 +62,7 @@
                             </div>
                             <% } %>
                     </div>
+                    <%}%>
         </div>
 
 

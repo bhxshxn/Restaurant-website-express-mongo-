@@ -127,19 +127,21 @@ router.get('/order-com/:id', authenticateUser, async (req, res, next) => {
     }
 });
 
-//orders delete
+//carts delete
 router.get('/delete/:id', authenticateUser, async (req, res) => {
     var id = req.params.id;
     await order.findByIdAndDelete({ _id: id });
     const Order = await order.find({});
-    res.render('main/order', { user: req.session.user, orders: Order, page: null, msg: "Item Removed" });
+    res.render('main/cart', { user: req.session.user, orders: Order, page: null, msg: "Item Removed" });
 });
 
+//carts route
 router.get('/cart', authenticateUser, async (req, res) => {
     const Order = await order.find({});
     res.render('main/cart', { user: req.session.user, orders: Order, page: null, msg: null });
 });
 
+//carts add one
 router.get('/add/:id', authenticateUser, async (req, res) => {
     var id = req.params.id;
     const result = await order.findById({ _id: id });
@@ -151,6 +153,7 @@ router.get('/add/:id', authenticateUser, async (req, res) => {
     res.redirect('back');
 });
 
+//carts minus one
 router.get('/minus/:id', authenticateUser, async (req, res) => {
     var id = req.params.id;
     const result = await order.findById({ _id: id });
@@ -167,6 +170,17 @@ router.get('/minus/:id', authenticateUser, async (req, res) => {
     };
 });
 
+//menu search
+router.post('/search', authenticateUser, async (req, res) => {
+    var name = req.body.search;
+    name = name.charAt(0).toUpperCase() + name.slice(1);
+    const Menu = await menu.find({ title: name });
+    if (Menu.length > 0) {
+        res.render('main/menu', { m: Menu, page: 'menu', msg: null, user: req.session.user });
+    } else {
+        res.render('main/menu', { m: Menu, page: 'menu', msg: 'No such Dish found', user: req.session.user });
+    }
+});
 
 
 module.exports = router;
