@@ -101,26 +101,56 @@ router.get('/order', authenticateUser, async (req, res) => {
 //order
 router.get('/order-com/:id', authenticateUser, async (req, res, next) => {
     var id = req.params.id;
+    var id1;
     if (req.session.user) {
         const result = await menu.find({ _id: id });
-        if (result[0].id === id) {
-            var new_order = new order({
-                name: result[0].title,
-                quantity: 1,
-                price: result[0].price,
-                user: req.session.user.username
-            })
+        const orders = await order.find({ user: req.session.user.username });
+        var count = 0;
+        orders.forEach(element => {
+            if (result[0].title === element.name) {
+                count++;
+            };
+        });
+        if (count == 0) {
+            if (result[0].id === id) {
+                var new_order = new order({
+                    name: result[0].title,
+                    quantity: 1,
+                    price: result[0].price,
+                    user: req.session.user.username
+                })
 
-            new_order.save(async function (err, result) {
-                if (err) {
-                    console.log(err);
+                new_order.save(async function (err, result) {
+                    if (err) {
+                        console.log(err);
+                    }
+                    else {
+                        const Menu = await menu.find({})
+                        res.render('main/menu', { user: req.session.user, page: "menu", msg: "Added to Cart", m: Menu });
+                    }
+                })
+            };
+        } else {
+            const orders = await order.find({ user: req.session.user.username });
+            const result = await menu.find({ _id: id });
+            // console.log(result[0].title);
+            for (var i = 0; i < orders.length; i++) {
+                if (result[0].title === orders[i].name) {
+                    id1 = orders[i]._id;
                 }
-                else {
-                    const Menu = await menu.find({})
-                    res.render('main/menu', { user: req.session.user, page: "menu", msg: "Added to Cart", m: Menu });
-                }
-            })
-        };
+            }
+            const results = await order.findById({ _id: id1 });
+            console.log(results);
+            const Menu = await menu.find({ title: results.name })
+            var quantitys = results.quantity;
+            quantitys++;
+            var prices = Menu[0].price * quantitys;
+            console.log(Menu, quantitys, prices)
+            await order.replaceOne({ _id: id1 }, { name: Menu[0].title, user: req.session.user.username, quantity: quantitys, price: prices });
+            res.redirect('back');
+        }
+
+
     } else {
         const Menu = await menu.find({})
         res.render('main/menu', { user: req.session.user, page: "menu", msg: "Login to Order", m: Menu });
@@ -178,7 +208,8 @@ router.post('/search', authenticateUser, async (req, res) => {
     if (Menu.length > 0) {
         res.render('main/menu', { m: Menu, page: 'menu', msg: null, user: req.session.user });
     } else {
-        res.render('main/menu', { m: Menu, page: 'menu', msg: 'No such Dish found', user: req.session.user });
+        const Menus = await menu.find({});
+        res.render('main/menu', { m: Menus, page: 'menu', msg: 'No such Dish found', user: req.session.user });
     }
 });
 
