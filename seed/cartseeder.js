@@ -1,4 +1,4 @@
-const Product = require('../models/order');
+const Product = require('../models/cart');
 const mongoose = require('mongoose');
 
 const url = "mongodb+srv://bhxshxn:bhxshxn@9@cluster0.ixoza.mongodb.net/RestaurantretryWrites=true&w=majority"
@@ -17,15 +17,15 @@ db.once('open', function () {
 
 const product = [
     new Product({
-        orderId: "10",
-        tranId: '100',
-        amount: 320,
+        name: "Palak Paneer",
+        quantity: '2',
+        price: 320,
         user: "Bhxshxn"
     }),
     new Product({
-        orderId: "11",
-        tranId: '101',
-        amount: 320,
+        name: "Triple Rice",
+        quantity: '1',
+        price: 180,
         user: "Bhxshxn"
     })
 

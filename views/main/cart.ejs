@@ -34,7 +34,7 @@
             <%var count=0%>
                 <%var counts=0%>
                     <%var total=0%>
-                        <%orders.forEach(order=>{%>
+                        <%cartes.forEach(order=>{%>
                             <%if(user.username==order.user){%>
                                 <%total=total+parseInt(order.price);%>
                                     <%count+=1%>
@@ -53,7 +53,7 @@
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
-                                                                <%orders.forEach(order=>{%>
+                                                                <%cartes.forEach(order=>{%>
                                                                     <%if(user.username==order.user){%>
                                                                         <%counts++%>
                                                                             <tr>
@@ -87,12 +87,13 @@
                                                         <div class="alert alert-success" role="alert">
                                                             <span><strong> Total=&#8377; <%=total%>
                                                                 </strong></span>
-                                                            <a href="#" class="btn btn-success">Checkout</a>
+                                                            <a href="/user/checkout/<%user.username%>"
+                                                                class="btn btn-success">Checkout</a>
                                                         </div>
                                                     </div>
                                                     <%}else{%>
                                                         <div class="alert alert-primary" role="alert">
-                                                            You have no order please order something!!!.
+                                                            Cart is Empty!!!.
                                                         </div>
                                                         <%}%>
 

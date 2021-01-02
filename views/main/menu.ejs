@@ -18,6 +18,11 @@
         .form-control {
             display: inline;
         }
+
+        .box {
+            display: flex;
+            justify-content: center;
+        }
     </style>
 </head>
 
@@ -35,7 +40,7 @@
                         </button>
                 </div>
                 <%}%>
-                    <form action="/user/search" method="POST" class="mb-3 mt-5 ">
+                    <form action="/user/search" method="POST" class="mb-3 mt-5 box">
                         <input type="text" class="form-control w-50 ml-10" aria-label="Sizing example input"
                             aria-describedby="inputGroup-sizing-default" name="search">
                         <input type="submit" value="Search" class="btn btn-success">
@@ -54,7 +59,7 @@
                                     <span class="pull-left">
                                         &#8377; <%=m[i].price%>
                                     </span>
-                                    <a href="/user/order-com/<%=m[i]._id%>" class="btn btn-primary pull-right"
+                                    <a href="/user/cart-com/<%=m[i]._id%>" class="btn btn-primary pull-right"
                                         style="float:right;">Add to Cart</a>
                                 </div>
                             </div>
