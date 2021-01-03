@@ -56,4 +56,12 @@ router.get('/order', isAdmin, async (req, res) => {
     res.render('admin/order', { orders: result });
 });
 
+router.get('/delete/:id', async (req, res) => {
+    var id = req.params.id;
+    await order.findByIdAndDelete({ _id: id });
+    const orders = await order.find({});
+    res.render('admin/order', { user: req.session.user, orders: orders, page: null, msg: "Item Removed" });
+});
+
+
 module.exports = router;

@@ -27,9 +27,9 @@
                     <thead class="thead-light">
                         <tr>
                             <th scope="col">#</th>
-                            <th scope="col">Name</th>
-                            <th scope="col">Quantity</th>
-                            <th scope="col">Price</th>
+                            <th scope="col">Order Id</th>
+                            <th scope="col">Order Details</th>
+                            <th scope="col">Amount</th>
                             <th scope="col">user</th>
                             <th scope="col">Action</th>
                         </tr>
@@ -41,17 +41,17 @@
                                     <%=count%>
                                 </th>
                                 <td>
-                                    <%=order.name%>
+                                    <%=order.orderId%>
                                 </td>
                                 <td>
-                                    <%=order.quantity%>
+                                    <%=order.details%>
                                 </td>
-                                <td>Rs.<%=order.price%>
+                                <td>Rs.<%=order.amount%>
                                 </td>
                                 <td>
                                     <%=order.user%>
                                 </td>
-                                <td><a href="/user/delete/<%=order._id;%>"><i class="fa fa-trash"></i></a></td>
+                                <td><a href="/admin/delete/<%=order._id;%>"><i class="fa fa-trash"></i></a></td>
                             </tr>
                             <%count++%>
                                 <%})%>

@@ -49,6 +49,7 @@
                                                                 <th scope="col">#</th>
                                                                 <th scope="col">Order Id</th>
                                                                 <th scope="col">Transaction Id</th>
+                                                                <th scope="col">Order Details</th>
                                                                 <th scope="col">Amount</th>
                                                             </tr>
                                                         </thead>
@@ -65,6 +66,9 @@
                                                                             </td>
                                                                             <td>
                                                                                 <%=order.tranId%>
+                                                                            </td>
+                                                                            <td>
+                                                                                <%=order.details%>
                                                                             </td>
                                                                             <td>Rs.<%=order.amount%>
                                                                             </td>

@@ -21,9 +21,9 @@ router.get('/register', (req, res) => {
 
 //post for register
 router.post("/register", async (req, res) => {
-    const { email, password, username, add } = req.body;
+    const { email, password, username, add, tel } = req.body;
     // check for missing filds
-    if (!email || !password || !username || !add) {
+    if (!email || !password || !username || !add || !tel) {
         res.render('main/register', { user: req.session.user, page: "login", msg: "Please enter all the fields" })
         return;
     };
@@ -43,7 +43,7 @@ router.post("/register", async (req, res) => {
 
     // lets hash the password
     const hashedPassword = await bcrypt.hash(password, 12);
-    const latestUser = new User({ email, password: hashedPassword, username: user, add });
+    const latestUser = new User({ email, password: hashedPassword, username: user, add, phone: tel });
 
     latestUser
         .save()
@@ -204,9 +204,10 @@ router.get('/minus/:id', authenticateUser, async (req, res) => {
 });
 
 //menu search
-router.post('/search', authenticateUser, async (req, res) => {
+router.post('/search', async (req, res) => {
     var name = req.body.search;
     name = name.charAt(0).toUpperCase() + name.slice(1);
+
     const Menu = await menu.find({ title: name });
     if (Menu.length > 0) {
         res.render('main/menu', { m: Menu, page: 'menu', msg: null, user: req.session.user });
@@ -219,6 +220,7 @@ router.post('/search', authenticateUser, async (req, res) => {
 //checkout
 router.get('/checkout', authenticateUser, async (req, res) => {
     const result = await cart.find({ user: req.session.user.username });
+    const users = await User.find({ username: req.session.user.username })
     // const user = await User.find({ username: req.session.user.username });
     // // console.log(result);
     var amount = 0;
@@ -227,6 +229,7 @@ router.get('/checkout', authenticateUser, async (req, res) => {
         amount += parseInt(element.price);
         detail += `${element.name} (x${element.quantity}), `
     });
+    // const details = `${req.session.user.username}-${detail}`
     // // console.log(amount);
     // // console.log(detail);
     var PaytmConfig = {
@@ -243,7 +246,7 @@ router.get('/checkout', authenticateUser, async (req, res) => {
     params['CUST_ID'] = 'Customer001';
     params['TXN_AMOUNT'] = `${parseInt(amount)}`;
     params['CALLBACK_URL'] = `http://localhost:3000/user/order/${req.session.user.username}`;
-    params['EMAIL'] = 'abc@mailinator.com';
+    params['EMAIL'] = `${users.username}`;
     params['MOBILE_NO'] = '7777777777';
 
     paytm.genchecksum(params, PaytmConfig.key, (err, checksum) => {
@@ -266,8 +269,14 @@ router.get('/checkout', authenticateUser, async (req, res) => {
 //post checkout
 router.post('/order/:id', async (req, res) => {
     const id = req.params.id;
+    const result = await cart.find({ user: id });
+    var detail = "";
+    result.forEach(element => {
+        detail += `${element.name} (x${element.quantity}), `
+    });
+
     const Order = new order({
-        orderId: req.body.ORDERID, tranId: req.body.TXNID, amount: req.body.TXNAMOUNT, user: id
+        orderId: req.body.ORDERID, tranId: req.body.TXNID, amount: req.body.TXNAMOUNT, user: id, details: detail
     });
     Order.save()
         .then(async () => {
