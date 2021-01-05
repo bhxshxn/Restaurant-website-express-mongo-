@@ -56,6 +56,7 @@ router.get('/order', isAdmin, async (req, res) => {
     res.render('admin/order', { orders: result });
 });
 
+//odrers delete
 router.get('/delete/:id', async (req, res) => {
     var id = req.params.id;
     await order.findByIdAndDelete({ _id: id });
@@ -63,5 +64,11 @@ router.get('/delete/:id', async (req, res) => {
     res.render('admin/order', { user: req.session.user, orders: orders, page: null, msg: "Item Removed" });
 });
 
+//order status
+router.get('/orderstatus/:id', async (req, res) => {
+    var id = req.params.id;
+    await order.findByIdAndUpdate(id, { status: 'compelete' });
+    res.redirect('back');
+});
 
 module.exports = router;

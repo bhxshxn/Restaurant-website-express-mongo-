@@ -276,7 +276,7 @@ router.post('/order/:id', async (req, res) => {
     });
 
     const Order = new order({
-        orderId: req.body.ORDERID, tranId: req.body.TXNID, amount: req.body.TXNAMOUNT, user: id, details: detail
+        orderId: req.body.ORDERID, tranId: req.body.TXNID, amount: req.body.TXNAMOUNT, user: id, details: detail, status: 'processing'
     });
     Order.save()
         .then(async () => {
