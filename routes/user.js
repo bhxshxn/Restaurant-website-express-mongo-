@@ -22,6 +22,9 @@ router.get('/register', (req, res) => {
 //post for register
 router.post("/register", async (req, res) => {
     const { email, password, username, add, tel } = req.body;
+    if (password.length < 6) {
+        res.render('main/register', { user: req.session.user, page: "login", msg: "Password Length is too short " });
+    }
     // check for missing filds
     if (!email || !password || !username || !add || !tel) {
         res.render('main/register', { user: req.session.user, page: "login", msg: "Please enter all the fields" })
@@ -68,7 +71,7 @@ router
         const doesUserExits = await User.findOne({ username });
 
         if (!doesUserExits) {
-            res.render('main/login', { user: req.session.user, page: "login", msg: "Invalid useranme or password" }); return;
+            res.render('main/login', { user: req.session.user, page: "login", msg: "User does not exist" });
         }
 
         const doesPasswordMatch = await bcrypt.compare(
@@ -102,7 +105,7 @@ router.get('/order', authenticateUser, async (req, res) => {
 });
 
 //cart
-router.get('/cart-com/:id', authenticateUser, async (req, res, next) => {
+router.get('/cart-com/:id', async (req, res, next) => {
     var id = req.params.id;
     var id1;
     if (req.session.user) {
@@ -156,7 +159,7 @@ router.get('/cart-com/:id', authenticateUser, async (req, res, next) => {
 
     } else {
         const Menu = await menu.find({})
-        res.render('main/menu', { user: req.session.user, page: "menu", msg: "Login to cart", m: Menu });
+        res.render('main/menu', { user: req.session.user, page: "menu", msg: "Login to add item to cart", m: Menu });
     }
 });
 

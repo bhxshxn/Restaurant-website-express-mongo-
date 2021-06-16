@@ -31,23 +31,24 @@
                     </div>
                     <%}%>
                         <label for="inputEmail" class="sr-only">Email address</label>
-                        <input name="email" type="text" id="inputEmail" class="form-control" placeholder="Email address"
-                            required autofocus style="margin-bottom: 10px;">
+                        <input name="email" type="email" id="inputEmail" class="form-control"
+                            placeholder="Email address" required autofocus style="margin-bottom: 10px;">
                         <label for="inputPassword" class="sr-only">Username</label>
-                        <input name="username" type="text" id="inputPassword" class="form-control"
+                        <input name="username" type="text" id="inputUsername" class="form-control"
                             placeholder="Username" required style="margin-bottom: 10px;">
                         <label for="inputPassword" class="sr-only">Password</label>
                         <input name="password" type="password" id="inputPassword" class="form-control"
                             placeholder="Password" required style="margin-bottom: 10px;">
                         <label for="inputPassword" class="sr-only">Address</label>
-                        <input name="add" type="text" id="inputPassword" class="form-control" placeholder="Address"
-                            required style="margin-bottom: 10px;">
-                        <label for="inputPassword" class="sr-only">Address</label>
+                        <input name="add" type="text" id="inputAdd" class="form-control" placeholder="Address" required
+                            style="margin-bottom: 10px;">
+                        <label for="inputPassword" class="sr-only">Phone Number</label>
                         <input name="tel" type="tel" id="inputPassword" class="form-control" placeholder="Phone Number"
                             required style="margin-bottom: 10px;">
                         <button class="btn btn-lg btn-primary btn-block mb-4" type="submit">Sign up</button>
+                        <ul class="register" style="margin-left: 15px;">Back to<a href="/user/login" class="signup">
+                                Login.</a></ul>
             </form>
-            <ul class="register" style="margin-left: 15px;">Back to<a href="/user/login" class="signup"> Login.</a></ul>
         </div>
 
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
