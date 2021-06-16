@@ -34,7 +34,8 @@
                         <input name="email" type="email" id="inputEmail" class="form-control"
                             placeholder="Email address" required autofocus style="margin-bottom: 10px;">
                         <label for="inputPassword" class="sr-only">Username</label>
-                        <input name="username" type="text" id="inputUsername" class="form-control"
+                        <input name="username" pattern="^[a-zA-Z][a-zA-Z0-9-_\.]{1,10}$"
+                            title="should start with a letter" type="text" id="inputUsername" class="form-control"
                             placeholder="Username" required style="margin-bottom: 10px;">
                         <label for="inputPassword" class="sr-only">Password</label>
                         <input name="password" type="password" id="inputPassword" class="form-control"
@@ -43,8 +44,9 @@
                         <input name="add" type="text" id="inputAdd" class="form-control" placeholder="Address" required
                             style="margin-bottom: 10px;">
                         <label for="inputPassword" class="sr-only">Phone Number</label>
-                        <input name="tel" type="tel" id="inputPassword" class="form-control" placeholder="Phone Number"
-                            required style="margin-bottom: 10px;">
+                        <input pattern="^[6789]\d{1,10}$" title="Please add a valid phone number" name="tel" type="tel"
+                            id="inputPassword" class="form-control" placeholder="Phone Number" required
+                            style="margin-bottom: 10px;">
                         <button class="btn btn-lg btn-primary btn-block mb-4" type="submit">Sign up</button>
                         <ul class="register" style="margin-left: 15px;">Back to<a href="/user/login" class="signup">
                                 Login.</a></ul>
