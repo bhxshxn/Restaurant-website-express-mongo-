@@ -22,6 +22,8 @@
         <div class="center-text">
             <form class="form-signin" method="POST" action="/user/register">
                 <h2 class="form-signin-heading">Please Sign up</h2>
+                <span style="color: rgb(235, 41, 41);font-size: smaller;margin-bottom: 5px;">*All fields are
+                    required.</span>
                 <%if(msg){%>
                     <div class="alert alert-warning alert-dismissible fade show" role="alert">
                         <%=msg%>
@@ -46,7 +48,7 @@
                             style="margin-bottom: 10px;">
                         <label for="inputPassword" class="sr-only">Phone Number</label>
                         <input pattern="[7-9]{1}[0-9]{9}" title="Please add a valid phone number" name="tel" type="tel"
-                            id="inputPassword" class="form-control" placeholder="Phone Number" required
+                            id="inputPassword" class="form-control" placeholder="Phone Number*" required
                             style="margin-bottom: 10px;">
                         <button class="btn btn-lg btn-primary btn-block mb-4" type="submit">Sign up</button>
                         <ul class="register" style="margin-left: 15px;">Back to<a href="/user/login" class="signup">

@@ -21,6 +21,8 @@
         <!-- Navbar End -->
         <form class="form-signin" method="POST" action="/user/login">
             <h2 class="form-signin-heading">Please Sign in</h2>
+            <span style="color: rgb(235, 41, 41);font-size: smaller;margin-bottom: 5px;">*All fields are
+                required.</span>
             <%if(msg){%>
                 <div class="alert alert-warning alert-dismissible fade show" role="alert">
                     <%=msg%>
