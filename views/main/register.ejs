@@ -31,8 +31,9 @@
                     </div>
                     <%}%>
                         <label for="inputEmail" class="sr-only">Email address</label>
-                        <input name="email" type="email" id="inputEmail" class="form-control"
-                            placeholder="Email address" required autofocus style="margin-bottom: 10px;">
+                        <input name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" type="email"
+                            id="inputEmail" class="form-control" placeholder="Email address" required autofocus
+                            style="margin-bottom: 10px;">
                         <label for="inputPassword" class="sr-only">Username</label>
                         <input name="username" pattern="^[a-zA-Z][a-zA-Z0-9-_\.]{1,10}$"
                             title="should start with a letter" type="text" id="inputUsername" class="form-control"
@@ -44,7 +45,7 @@
                         <input name="add" type="text" id="inputAdd" class="form-control" placeholder="Address" required
                             style="margin-bottom: 10px;">
                         <label for="inputPassword" class="sr-only">Phone Number</label>
-                        <input pattern="^[6789]\d{1,10}$" title="Please add a valid phone number" name="tel" type="tel"
+                        <input pattern="[7-9]{1}[0-9]{9}" title="Please add a valid phone number" name="tel" type="tel"
                             id="inputPassword" class="form-control" placeholder="Phone Number" required
                             style="margin-bottom: 10px;">
                         <button class="btn btn-lg btn-primary btn-block mb-4" type="submit">Sign up</button>

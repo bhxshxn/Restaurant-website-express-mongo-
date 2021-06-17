@@ -153,7 +153,8 @@ router.get('/cart-com/:id', async (req, res, next) => {
             var prices = Menu[0].price * quantitys;
             console.log(Menu, quantitys, prices)
             await cart.replaceOne({ _id: id1 }, { name: Menu[0].title, user: req.session.user.username, quantity: quantitys, price: prices });
-            res.redirect('back');
+            const Menus = await menu.find({})
+            res.render('main/menu', { user: req.session.user, page: "menu", msg: "Added to Cart", m: Menus });
         }
 
 
