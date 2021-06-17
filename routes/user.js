@@ -146,7 +146,7 @@ router.get('/cart-com/:id', async (req, res, next) => {
                 }
             }
             const results = await cart.findById({ _id: id1 });
-            console.log(results);
+            // console.log(results);
             const Menu = await menu.find({ title: results.name })
             var quantitys = results.quantity;
             quantitys++;
@@ -233,9 +233,6 @@ router.get('/checkout', authenticateUser, async (req, res) => {
         amount += parseInt(element.price);
         detail += `${element.name} (x${element.quantity}), `
     });
-    // const details = `${req.session.user.username}-${detail}`
-    // // console.log(amount);
-    // // console.log(detail);
     var PaytmConfig = {
         mid: "szNRBn33208468734488",
         key: "X&jBXkX#x&_yU@nl",
