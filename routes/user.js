@@ -249,7 +249,7 @@ router.get('/checkout', authenticateUser, async (req, res) => {
     params['ORDER_ID'] = 'TEST_' + new Date().getTime();
     params['CUST_ID'] = 'Customer001';
     params['TXN_AMOUNT'] = `${parseInt(amount)}`;
-    params['CALLBACK_URL'] = `http://localhost:3000/user/order/${req.session.user.username}`;
+    params['CALLBACK_URL'] = `http://reanrestaurants.herokuapp.com/user/order/${req.session.user.username}`;
     params['EMAIL'] = `${users.username}`;
     params['MOBILE_NO'] = '7777777777';
 
